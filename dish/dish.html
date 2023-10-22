@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Piatti</title>
+
+    <style>
+        .selected-ingredients {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+        gap: 5px;
+        }
+
+        .selected-ingredients span {
+        background-color: #007bff;
+        color: #fff;
+        padding: 2px 5px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        }
+
+        .selected-ingredients button {
+        background-color: transparent;
+        border: none;
+        color: #fff;
+        margin-left: 5px;
+        cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <h1>Materie Prime</h1>
+
+        <div class="dishes">
+            <ul>
+                <li v-for="(dish, index) in dishes" :class="{'underline': index < dishes.length -1}">
+                    <div class="dish">
+                        <span>{{ dish.name }}</span>
+                        <span>{{ dish.price }}</span>
+                        <span>
+                            <span v-for="(ingredient, index) in dish.ingredients" :key="index">
+                              {{ ingredient.name }}
+                              <span v-if="index < dish.ingredients.length - 1">, </span>
+                            </span>
+                        </span>
+                        <i class="fa-solid fa-trash" @click="deldish(index) "></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <form action="create.php" method="POST" @submit.prevent="adddish()" class="add-dish">
+            <input type="text" v-model="newdish.name" name="dish_name" id="dish_name" placeholder="Inserisci il nome del piatto" required>
+            <input type="number" v-model="newdish.price" name="dish_price" id="dish_price" placeholder="Inserisci il prezzo" required>
+            <select multiple v-model="newdish.ingredients" id="ingredient_list">
+                <option v-for="ingredient in ingredientList" :value="ingredient">{{ ingredient.name }}</option>
+            </select>
+            <div class="selected-ingredients">
+                <span v-for="ingredient in newdish.ingredients" :key="ingredient.id">
+                    {{ ingredient.name }}
+                    <button @click="removeIngredient(ingredient)">x</button>
+                </span>
+            </div>
+            
+              
+            <button type="submit">Inserisci</button>
+        </form>
+        
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script>
+
+
+    </script>
+
+</body>
+
+
+
+</html>
