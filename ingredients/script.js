@@ -33,9 +33,9 @@ createApp({
                     date: this.newIngredient.date,
                 });
 
-                this.newingredient.name = '';
-                this.newingredient.quantity = '';
-                this.newingredient.date = '';
+                this.newIngredient.name = '';
+                this.newIngredient.quantity = '';
+                this.newIngredient.date = '';
             });
         },
 
