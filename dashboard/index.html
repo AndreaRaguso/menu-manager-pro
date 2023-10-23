@@ -53,6 +53,10 @@
         .card-body {
             padding: 15px;
         }
+        canvas {
+            width: 600px;
+            height: 600px;
+        }
 
     </style>
 
@@ -103,7 +107,7 @@
                             <h5 class="card-title">Materie prime in scadenza</h5>
                             <ul class="list-group">
                                 <li v-for="item in expiryIngredient" class="list-group-item">
-                                    {{ item.name }} (Scadenza: {{ item.date }})
+                                    <span class="text-capitalize">{{ item.name }}</span> (Scadenza: {{ item.date }})
                                 </li>
                             </ul>
                         </div>
@@ -115,7 +119,7 @@
                             <h5 class="card-title">Lista della spesa</h5>
                             <ul class="list-group">
                                 <li v-for="item in listIngredient" class="list-group-item">
-                                    {{ item.name }} (Quantità: {{ item.quantity }})
+                                    <span class="text-capitalize">{{ item.name }}</span> (Quantità: {{ item.quantity }})
                                 </li>
                             </ul>
                         </div>
@@ -127,17 +131,43 @@
                             <h5 class="card-title">Piatti in offerta</h5>
                             <ul class="list-group">
                                 <li v-for="item in dishOffer" class="list-group-item">
-                                    {{ item.name }} {{ item.price }} € (Sconto: 10%)
+                                    <span class="text-capitalize">{{ item.name }}</span> {{ item.price }} € (Sconto: 10%)
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="d-flex justify-content-between">
+                <h3 class="mt-5">Materie prime utlizzate</h3>
+                <h3 class="mt-5 me-4">Piatti Venduti</h3>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="mt-5" style="width: 600px; height: 600px;">
+                    <canvas id="myChart"></canvas>
+                </div>
+    
+                <div class="mt-5" style="width: 600px; height: 600px;">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+
         </div>
-
-
     </div>
+
+    <footer id="footer" class="g-bg-white g-color-gray-dark-v6 g-brd-top g-brd-gray-light-v7 g-pa-20 mt-5">
+        <a href="https://caronte.chiancheweb.it/targa.php">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+              <h6 class="mx-2 text-dark">Intervento realizzato nell'ambito della S.S.L. del G.A.L. Valle d'Itria 2014/2020 - Azione 7 - Intervento 1 "Avviamento di attività imprenditoriali per attività extra-agricole in zone rurali"</h6>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <img src="../industry/assets_app/img/loghi_footer.png" class="loghi-footer" alt="Loghi Footer">
+          </div>
+        </a>
+    </footer>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
@@ -145,8 +175,57 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script type="text/javascript" src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
 
+        var data = {
+            labels: ['Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre'],
+            datasets: [{
+                label: "Materie prime utilizzate",
+                data: [65, 59, 80, 81, 56, 55],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: 'bar', 
+            data: data,
+        });
+
+
+        var data2 = {
+            labels: ['Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre'],
+            datasets: [{
+                label: "Piatti venduti",
+                data: [65, 59, 80, 81, 56, 55, 40],
+                borderColor: 'rgb(75, 192, 192)',
+            }]
+        };
+
+        var ctx2 = document.getElementById('lineChart');
+
+        var myChart2 = new Chart(ctx2, {
+            type: 'line', 
+            data: data2,
+        });
 
     </script>
 
