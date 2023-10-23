@@ -3,7 +3,6 @@
 $dishesString = file_get_contents('dishes.json');
 $dishesDecoded = json_decode($dishesString, true);
 
-// Trova l'ID massimo attualmente presente tra gli dishi
 $maxId = 0;
 foreach ($dishesDecoded as $dish) {
     if ($dish['id'] > $maxId) {
@@ -11,7 +10,6 @@ foreach ($dishesDecoded as $dish) {
     }
 }
 
-// Genera un nuovo ID autoincremento
 $newId = $maxId + 1;
 
 $newdish = [

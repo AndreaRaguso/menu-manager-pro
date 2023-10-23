@@ -111,8 +111,8 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Materie prime in scadenza</h5>
-                            <ul class="list-group">
+                            <h5 class="card-title fs-4">Materie prime in scadenza</h5>
+                            <ul class="list-group fs-5">
                                 <li v-for="item in expiryIngredient" class="list-group-item">
                                     <span class="text-capitalize">{{ item.name }}</span> (Scadenza: {{ item.date }})
                                 </li>
@@ -123,8 +123,8 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Lista della spesa</h5>
-                            <ul class="list-group">
+                            <h5 class="card-title fs-4">Lista della spesa</h5>
+                            <ul class="list-group fs-5">
                                 <li v-for="item in listIngredient" class="list-group-item">
                                     <span class="text-capitalize">{{ item.name }}</span> (Quantità: {{ item.quantity }})
                                 </li>
@@ -135,10 +135,18 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Piatti in offerta</h5>
+                            <h5 class="card-title fs-4">Piatti in offerta</h5>
                             <ul class="list-group">
                                 <li v-for="item in dishOffer" class="list-group-item">
-                                    <span class="text-capitalize">{{ item.name }}</span> {{ item.price }}€ (Sconto: 10%)
+                                    <div class="d-flex align-items-center gap-2 fs-5">
+                                        <div class="text-capitalize">{{ item.name }}</div>
+                                        <div class="badge bg-success">{{ Math.ceil(item.price * 0.9) }}€</div>
+                                        <div class="d-flex align-items-center">
+                                            <div>(Sconto: </div>
+                                            <div class="badge bg-danger mx-1">10%</div>)
+                                        </div>
+                                    </div>
+                                      
                                 </li>
                             </ul>
                         </div>
