@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <title>Piatti</title>
     <style>
+              body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
         .selected-ingredients {
         display: flex;
         flex-wrap: wrap;
@@ -34,6 +38,48 @@
         margin-left: 5px;
         cursor: pointer;
         }
+
+        .modal-content {
+          border: none;
+          border-radius: 10px;
+        }
+        .modal-header {
+          background-color: #007BFF;
+          color: white;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+        }
+
+        .dishes {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 20px;
+    }
+    .dish {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .dish:last-child {
+      border-bottom: none;
+    }
+    .trash-icon {
+      color: red;
+      cursor: pointer;
+    }
+    .loghi-footer {
+            width: 80%;
+            padding: 30px;
+            max-height: 150px;
+            object-fit: contain;
+        }
+
+        .c-wrapper{
+      height: calc(100vh - 100px);
+    }
 
     </style>
 
@@ -68,7 +114,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                       <li><a class="dropdown-item" href="#">Feature 1</a></li>
                       <li><a class="dropdown-item" href="#">Feature 2</a></li>
-                      <li><a class="dropdown-item" href="#">Logout</a></li>
+                      <li><a class="dropdown-item" href="/menu-manager-pro">Logout</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -76,56 +122,109 @@
             </div>
         </nav>
 
-        <h1>Materie Prime</h1>
+        <div class="container c-wrapper">
 
-        <div class="dishes">
-            <ul>
-                <li v-for="(dish, index) in dishes" :class="{'underline': index < dishes.length -1}">
-                    <div class="dish">
-                        <span>{{ dish.name }}</span>
-                        <span>{{ dish.price }}</span>
-                        <span>
-                            <span v-for="(ingredient, index) in dish.ingredients" :key="index">
-                              {{ ingredient.name }}
-                              <span v-if="index < dish.ingredients.length - 1">, </span>
-                            </span>
-                        </span>
-                        <i class="fa-solid fa-trash" @click="deldish(index) "></i>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <form action="create.php" method="POST" @submit.prevent="adddish()" class="add-dish">
-            <input type="text" v-model="newdish.name" name="dish_name" id="dish_name" placeholder="Inserisci il nome del piatto" required>
-            <input type="number" v-model="newdish.price" name="dish_price" id="dish_price" placeholder="Inserisci il prezzo" required>
-            <select multiple v-model="newdish.ingredients" id="ingredient_list">
-                <option v-for="ingredient in ingredientList" :value="ingredient">{{ ingredient.name }}</option>
-            </select>
-            <div class="selected-ingredients">
-                <span v-for="ingredient in newdish.ingredients" :key="ingredient.id">
-                    {{ ingredient.name }}
-                    <button @click="removeIngredient(ingredient)">x</button>
-                </span>
+          <div class="d-flex justify-content-between align-items-center mx-4">
+            <div>
+              <h1>I nostri piatti</h1>
             </div>
-            
-              
-            <button type="submit">Inserisci</button>
-        </form>
-        
+            <div>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDishModal">
+                Aggiungi Piatto
+              </button>
+            </div>
+          </div>
+          
 
+          <div class="dishes">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome Piatto</th>
+                  <th>Prezzo</th>
+                  <th>Ingredienti</th>
+                  <th>Elimina Piatto</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(dish, index) in dishes">
+                  <td class="text-capitalize">{{ dish.name }}</td>
+                  <td>{{ dish.price }}€</td>
+                  <td>
+                    <span v-for="(ingredient, index) in dish.ingredients" :key="index" class="text-capitalize">
+                      {{ ingredient.name }}
+                      <span v-if="index < dish.ingredients.length - 1">, </span>
+                    </span>
+                  </td>
+                  <td>
+                    <i class="fas fa-trash trash-icon fs-3" @click="deldish(index)"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+
+          <!-- Modale per l'aggiunta di un piatto -->
+          <div class="modal fade" id="addDishModal" tabindex="-1" aria-labelledby="addDishModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addDishModalLabel">Aggiungi un nuovo piatto</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form @submit.prevent="adddish()" class="add-dish">
+                    <div class="mb-3">
+                      <label for="dish_name" class="form-label">Nome del piatto</label>
+                      <input type="text" v-model="newdish.name" class="form-control" name="dish_name" id="dish_name" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="dish_price" class="form-label">Prezzo del piatto (€)</label>
+                      <input type="number" v-model="newdish.price" class="form-control" name="dish_price" id="dish_price" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="ingredient_list" class="form-label">Ingredienti</label>
+                      <select multiple v-model="newdish.ingredients" class="form-control" id="ingredient_list">
+                        <option v-for="ingredient in ingredientList" :value="ingredient">{{ ingredient.name }}</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="selected_ingredients" class="form-label">Ingredienti selezionati :</label>
+                      <div class="selected-ingredients">
+                        <span v-for="ingredient in newdish.ingredients" :key="ingredient.id">
+                          {{ ingredient.name }}
+                          <button class="btn btn-danger btn-sm" @click="removeIngredient(ingredient)">x</button>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button type="submit" class="btn btn-primary">Inserisci</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="footer" class="bg-white mt-5 py-5">
+        <a href="../targa.html" class="text-decoration-none">
+          <div class="">
+            <div class="d-flex justify-content-center mx-5 p-0">
+              <h6 class="text-dark ">Intervento realizzato nell'ambito della S.S.L. del G.A.L. Luoghi del Mito e delle Gravine 2014/2020 - Azione 2 “GRAVINE SERVIZI: I LABORATORI DEL VALORE” - Intervento 2.1 - Aiuto all’avviamento di nuove imprese di servizi (start up) nel settore del turismo e delle tradizioni artigiane ed enogastronomiche del Parco rurale delle Gravine - Intervento 2.2 - Sostegno agli investimenti. Le start up del turismo, dell’artigianato e dell’enogastronomia</h6>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <img src="../img/loghi_footer.png" class="loghi-footer" alt="Loghi Footer">
+          </div>
+        </a>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script type="text/javascript" src="script.js"></script>
-    <script>
-
-
-    </script>
-
-</body>
-
-
-
+    <script></script>
+  </body>
 </html>

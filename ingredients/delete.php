@@ -10,7 +10,7 @@ $delingredient = [
 ];
 
 foreach ($ingredientsDecoded as $key => $value) {
-    if (in_array($delingredient['name'] , $value)) {
+    if (in_array($delingredient['id'] , $value)) {
         unset($ingredientsDecoded[$key]);
     }
 }
