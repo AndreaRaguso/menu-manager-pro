@@ -78,7 +78,7 @@ createApp({
         });
 
 
-        axios.get('/menu-manager-pro/ingredients/api.php')
+        axios.get('/ingredients/api.php')
         .then(response => {
             this.ingredientList = response.data.ingredients;
         })

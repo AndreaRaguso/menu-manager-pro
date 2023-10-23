@@ -39,7 +39,7 @@ createApp({
     created() {
 
         //Expiring Ingredients
-        axios.get('/menu-manager-pro/ingredients/expiry.php')
+        axios.get('/ingredients/expiry.php')
         .then(response => {
             console.log(response.data.ingredients);
             this.expiryIngredient = response.data.ingredients;
@@ -49,7 +49,7 @@ createApp({
         });
 
         //List Ingredients
-        axios.get('/menu-manager-pro/ingredients/list.php')
+        axios.get('/ingredients/list.php')
         .then(response => {
             this.listIngredient = response.data.ingredients;
         })
@@ -58,7 +58,7 @@ createApp({
         });
 
         //Dish Offer
-        axios.get('/menu-manager-pro/dish/dish.php')
+        axios.get('/dish/dish.php')
         .then(response => {
             this.dishOffer = response.data.dishes;
             console.log(this.dishOffer);
