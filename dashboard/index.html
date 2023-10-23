@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Piatti</title>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <h1>Dashboard</h1>
+
+        <h3>
+            Materie prime in scdenza 
+        </h3>
+        <ul>
+            <li v-for="item in expiryIngredient">{{ item.name }}</li>
+        </ul>
+
+        <h3>
+            Lista della spesa
+        </h3>
+        <ul>
+            <li v-for="item in listIngredient">{{ item.name }}</li>
+        </ul>
+
+        <h3>
+            Piatti in offerta
+        </h3>
+        <ul>
+            <li v-for="item in dishOffer">{{ item.name }}</li>
+        </ul>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script>
+
+
+    </script>
+
+</body>
+
+
+
+</html>
