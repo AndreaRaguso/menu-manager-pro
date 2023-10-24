@@ -149,7 +149,7 @@
               <tbody>
                 <tr v-for="(dish, index) in dishes">
                   <td class="text-capitalize">{{ dish.name }}</td>
-                  <td>{{ dish.price }}€</td>
+                  <td>{{ dish.price }} €</td>
                   <td>
                     <span v-for="(ingredient, index) in dish.ingredients" :key="index" class="text-capitalize">
                       {{ ingredient.name }}

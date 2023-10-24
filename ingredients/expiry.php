@@ -7,7 +7,7 @@ $ingredientsDecoded = json_decode($ingredientsString, true);
 $ingredients = [];
 
 foreach ($ingredientsDecoded as $ingredient) {
-    if($ingredient['date'] < date('Y-m-d')) {
+    if($ingredient['date'] <= date('Y-m-d')) {
         $ingredients[] = [
             'name' => $ingredient['name'],
             'quantity' => $ingredient['quantity'],
